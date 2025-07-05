@@ -9,7 +9,7 @@ const GenarelForm = () => {
     address: { city: '', state: '' },
     dob: new Date(),
     file: '',
-    skill: [],
+    skills: [{ name: '' }] as any,
     agree: false,
   });
 
@@ -31,6 +31,31 @@ const GenarelForm = () => {
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleSkillChange = (index: number, value: string) => {
+    const newSkills = [...formData.skills];
+    newSkills[index] = { ...newSkills[index], name: value };
+    setFormData((prev) => ({ ...prev, skills: newSkills }));
+  };
+  const addSkill = () => {
+    setFormData((prev) => ({
+      ...prev,
+      skills: [...prev.skills, { name: '' }],
+    }));
+  };
+
+  const removeSkill = (index: number) => {
+    const newSkills = [...formData.skills];
+    newSkills.splice(index, 1);
+    setFormData((prev) => ({
+      ...prev,
+      skills: newSkills,
+    }));
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, agree: e.target.checked }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -169,12 +194,35 @@ const GenarelForm = () => {
 
           <section className='mt-2'>
             <div>
-              <label htmlFor=''>Skill:</label>
+              <label>Skills:</label>
             </div>
-            <div>
-              <input type='text' className='border border-black ' />
-              <button className='border border-black ml-2'>Add Skill</button>
-            </div>
+            {formData.skills.map((skill: any, index: any) => (
+              <div key={index} className='flex items-center'>
+                <input
+                  type='text'
+                  className='border border-black'
+                  value={skill.name}
+                  onChange={(e) => handleSkillChange(index, e.target.value)}
+                  placeholder={`Skill ${index + 1}`}
+                />
+                {formData.skills.length > 1 && (
+                  <button
+                    type='button'
+                    className='ml-2 border border-black'
+                    onClick={() => removeSkill(index)} // Pass the correct index
+                  >
+                    Remove Skill
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type='button'
+              className='border border-black mt-2'
+              onClick={addSkill}
+            >
+              Add Skill
+            </button>
           </section>
 
           <section className='mt-2'>
@@ -182,7 +230,13 @@ const GenarelForm = () => {
               I agree:
             </label>
 
-            <input type='checkbox' className='border border-black ' />
+            <input
+              type='checkbox'
+              id='agree'
+              className='border border-black'
+              checked={formData.agree}
+              onChange={handleCheckboxChange}
+            />
           </section>
 
           <button className='border border-black'>Submit</button>
