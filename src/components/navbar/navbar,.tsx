@@ -4,11 +4,16 @@ const Navbar = () => {
   return (
     <>
       <div className='flex justify-center items-center gap-8 bg-black text-white p-4'>
-        <div>genarel form</div>
-        <div onClick={() => router.push('/react-hook-form')}>
+        <div className='cursor-pointer' onClick={() => router.push('/')}>
+          genarel form
+        </div>
+        <div
+          onClick={() => router.push('/react-hook-form')}
+          className='cursor-pointer'
+        >
           react-hook-form
         </div>
-        <div>react-hook-form(Zod)</div>
+        <div className='cursor-pointer'>react-hook-form(Zod)</div>
       </div>
     </>
   );
