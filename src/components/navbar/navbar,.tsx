@@ -13,7 +13,13 @@ const Navbar = () => {
         >
           react-hook-form
         </div>
-        <div className='cursor-pointer'>react-hook-form(Zod)</div>
+
+        <div
+          className='cursor-pointer'
+          onClick={() => router.push('/react-hook-form-zod')}
+        >
+          react-hook-form(Zod)
+        </div>
       </div>
     </>
   );
